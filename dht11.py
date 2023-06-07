@@ -1,8 +1,16 @@
 from machine import Pin
 from time import sleep
-import dht 
+import dht
+from utime import sleep_ms
 
 sensor = dht.DHT11(Pin(5))
+led = Pin(2,Pin.OUT)
+led.value(0)
+
+def blink():
+    led.value(0)    
+    sleep_ms(50)
+    led.value(1)
 
 while True:
   try:
@@ -10,9 +18,9 @@ while True:
     sensor.measure()
     temp = sensor.temperature()
     hum = sensor.humidity()
-    temp_f = temp * (9/5) + 32.0
+    if(temp > 24.0 or hum > 49.0):
+        blink()
     print('Temperature: %3.1f C' %temp)
-    print('Temperature: %3.1f F' %temp_f)
     print('Humidity: %3.1f %%' %hum)
     print("")
   except OSError as e:

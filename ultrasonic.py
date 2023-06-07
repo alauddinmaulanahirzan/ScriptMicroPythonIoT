@@ -6,6 +6,7 @@ from utime import sleep_ms
 # ESP8266
 sensor = HCSR04(trigger_pin=5, echo_pin=4, echo_timeout_us=10000)
 led = Pin(2,Pin.OUT)
+led.value(0)
 
 def blink():
     led.value(0)    
